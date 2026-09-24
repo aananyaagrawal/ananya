@@ -1,6 +1,687 @@
-<html>
-  <head><title>my portfolio</title></head>
-  <body>
-    <p> hiii i ananaya </p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aananya Agrawal — Portfolio</title>
+<meta name="description" content="Aananya Agrawal — personal portfolio. Curious, grounded, and always learning." />
+
+<!-- Google Fonts: Playfair Display (headings), Inter (body), Great Vibes (signature) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     EASY-EDIT ZONE — colors, fonts, and spacing tokens
+     ============================================================ */
+  :root{
+    --ivory:#F8F5EF;
+    --beige:#E8DED2;
+    --sage:#9BAA96;
+    --olive:#4E5A4A;
+    --brown:#765C4A;
+    --charcoal:#252525;
+
+    --font-body: 'Inter', sans-serif;
+    --font-heading: 'Playfair Display', serif;
+    --font-signature: 'Great Vibes', cursive;
+
+    --max-w: 1180px;
+    --section-y: 9rem;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    background:var(--ivory);
+    color:var(--charcoal);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  section{padding:var(--section-y) 1.5rem;}
+  .wrap{max-width:var(--max-w);margin:0 auto;}
+  h1,h2,h3{font-family:var(--font-heading);font-weight:500;letter-spacing:-0.01em;}
+  ::selection{background:var(--sage);color:var(--ivory);}
+
+  /* Focus states for accessibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--olive);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- Reveal-on-scroll ---------- */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- Section labels ---------- */
+  .eyebrow{
+    font-family:var(--font-signature);
+    font-size:1.6rem;
+    color:var(--brown);
+    display:block;
+    margin-bottom:.25rem;
+  }
+  .section-heading{
+    font-size:clamp(1.9rem, 3.2vw, 2.6rem);
+    color:var(--charcoal);
+  }
+
+  /* ============================================================
+     NAVBAR
+     ============================================================ */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:1.4rem 1.5rem;
+    transition:background .4s ease, box-shadow .4s ease, padding .4s ease, backdrop-filter .4s ease;
+  }
+  header.scrolled{
+    background:rgba(248,245,239,0.82);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 1px 0 rgba(37,37,37,0.06);
+    padding:0.9rem 1.5rem;
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .signature{
+    font-family:var(--font-signature);
+    font-size:1.9rem;
+    color:var(--olive);
+  }
+  .nav-links{
+    display:flex; gap:2.4rem; align-items:center;
+  }
+  .nav-links a{
+    position:relative; font-size:0.95rem; font-weight:400; color:var(--charcoal);
+    padding-bottom:4px;
+  }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:var(--brown); transition:width .35s ease;
+  }
+  .nav-links a:hover::after, .nav-links a:focus-visible::after{width:100%;}
+  .nav-links a:hover{color:var(--brown);}
+
+  .hamburger{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px;}
+  .hamburger span{width:24px; height:1.5px; background:var(--charcoal); transition:transform .3s ease, opacity .3s ease;}
+  .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+  .mobile-menu{
+    display:none;
+    position:fixed; inset:0 0 auto 0; top:64px;
+    background:var(--ivory);
+    padding:1rem 1.5rem 2rem;
+    box-shadow:0 12px 24px rgba(0,0,0,0.06);
+    transform:translateY(-8px); opacity:0; pointer-events:none;
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .mobile-menu.open{opacity:1; transform:translateY(0); pointer-events:auto;}
+  .mobile-menu a{display:block; padding:0.9rem 0; font-size:1.05rem; border-bottom:1px solid var(--beige);}
+
+  @media (max-width: 860px){
+    .nav-links{display:none;}
+    .hamburger{display:flex;}
+    .mobile-menu{display:block;}
+  }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  #home{
+    padding-top:9rem;
+    display:flex; align-items:center;
+    min-height:92vh;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:4rem; align-items:center;
+  }
+  .hero-copy .kicker{
+    font-family:var(--font-heading); font-style:italic; color:var(--brown);
+    font-size:1.05rem; margin-bottom:1.1rem;
+  }
+  .hero-copy h1{
+    font-size:clamp(2.4rem, 5vw, 3.6rem);
+    line-height:1.18;
+    color:var(--charcoal);
+    max-width:16ch;
+  }
+  .hero-copy .sub{
+    margin-top:1.6rem; font-size:1.08rem; color:var(--olive); max-width:34ch; font-weight:400;
+  }
+  .hero-copy .desc{
+    margin-top:1.1rem; font-size:1rem; color:#4a463f; max-width:42ch;
+  }
+  .cta-row{display:flex; gap:1rem; margin-top:2.4rem; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:0.9rem 1.7rem; border-radius:999px; font-size:0.92rem;
+    transition:transform .3s ease, background .3s ease, color .3s ease, border-color .3s ease;
+  }
+  .btn-primary{background:var(--olive); color:var(--ivory);}
+  .btn-primary:hover{background:var(--brown); transform:translateY(-2px);}
+  .btn-outline{border:1px solid var(--olive); color:var(--olive);}
+  .btn-outline:hover{background:var(--olive); color:var(--ivory); transform:translateY(-2px);}
+
+  .portrait-wrap{position:relative; display:flex; justify-content:center;}
+  .portrait-shape{
+    width:min(380px, 90%); aspect-ratio:4/5;
+    border-radius:58% 42% 61% 39% / 45% 48% 52% 55%;
+    overflow:hidden;
+    border:1px solid var(--beige);
+    box-shadow:0 30px 60px -20px rgba(78,90,74,0.35);
+    position:relative;
+    background:var(--beige);
+  }
+  .portrait-shape img{width:100%; height:100%; object-fit:cover;}
+  .portrait-deco{
+    position:absolute; font-family:var(--font-heading); color:var(--sage); opacity:0.85; pointer-events:none;
+  }
+  .deco-1{top:-1.2rem; right:1.5rem; font-size:1.6rem;}
+  .deco-2{bottom:1.5rem; left:-1.4rem; font-size:1.2rem; color:var(--brown);}
+  .deco-ring{
+    position:absolute; width:88%; height:88%; border:1px solid var(--sage); opacity:0.5;
+    border-radius:45% 55% 40% 60% / 55% 45% 60% 40%;
+    top:6%; left:6%; z-index:-1;
+  }
+
+  .tagline{
+    text-align:center; padding:3rem 1.5rem 0;
+    font-family:var(--font-heading); font-style:italic;
+    font-size:clamp(1rem, 2vw, 1.25rem); color:var(--brown);
+  }
+
+  @media (max-width: 900px){
+    .hero-grid{grid-template-columns:1fr; text-align:center;}
+    .hero-copy .desc, .hero-copy .sub{margin-left:auto; margin-right:auto;}
+    .cta-row{justify-content:center;}
+    #home{padding-top:8rem; min-height:auto;}
+    .portrait-wrap{order:-1; margin-bottom:1rem;}
+  }
+
+  /* ============================================================
+     ABOUT
+     ============================================================ */
+  #about{background:var(--beige);}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start;}
+  .about-text p{margin-top:1.1rem; color:#3e3b35; max-width:52ch;}
+
+  .journey-line{
+    margin-top:2rem; display:flex; align-items:center; gap:0.4rem;
+  }
+  .journey-line .dot{width:6px; height:6px; border-radius:50%; background:var(--brown);}
+  .journey-line .seg{flex:1; height:1px; background:repeating-linear-gradient(90deg, var(--brown) 0 6px, transparent 6px 12px);}
+
+  .beyond{margin-top:3rem;}
+  .beyond h3{font-size:1.3rem; margin-bottom:1.4rem;}
+  .card-grid{display:grid; grid-template-columns:1fr 1fr; gap:1rem;}
+  .personality-card{
+    background:var(--ivory); border-radius:16px; padding:1.4rem 1.3rem;
+    border:1px solid rgba(78,90,74,0.12);
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .personality-card:hover{transform:translateY(-4px); box-shadow:0 16px 30px -18px rgba(37,37,37,0.25);}
+  .personality-card .glyph{font-size:1.4rem; color:var(--olive); margin-bottom:0.6rem; display:block;}
+  .personality-card p{font-size:0.92rem; color:var(--charcoal);}
+
+  @media (max-width: 860px){
+    .about-grid{grid-template-columns:1fr; gap:2.5rem;}
+  }
+
+  /* ============================================================
+     TIMELINE (Education + Experience)
+     ============================================================ */
+  .timeline{position:relative; margin-top:3.5rem; padding-left:1.6rem;}
+  .timeline::before{
+    content:""; position:absolute; left:0; top:6px; bottom:6px; width:1px; background:var(--beige);
+  }
+  .t-item{position:relative; padding-left:2.2rem; padding-bottom:3rem;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:""; position:absolute; left:-1.6rem; top:4px; width:9px; height:9px; border-radius:50%;
+    background:var(--ivory); border:2px solid var(--olive);
+  }
+  #experience .t-item::before{background:var(--beige);}
+  .t-year{font-size:0.85rem; letter-spacing:0.02em; color:var(--brown); font-weight:500;}
+  .t-title{font-family:var(--font-heading); font-size:1.35rem; margin-top:0.3rem;}
+  .t-org{font-size:0.98rem; color:var(--olive); margin-top:0.15rem;}
+  .t-desc{margin-top:0.7rem; color:#4a463f; max-width:60ch; font-size:0.96rem;}
+  .t-desc ul{margin-top:0.6rem;}
+  .t-desc ul li{position:relative; padding-left:1rem; margin-top:0.35rem; font-size:0.94rem;}
+  .t-desc ul li::before{content:"–"; position:absolute; left:0; color:var(--brown);}
+
+  /* ============================================================
+     SKILLS
+     ============================================================ */
+  #skills{background:var(--beige); padding-top:5rem; padding-bottom:5rem;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:0.7rem; margin-top:2.2rem; justify-content:center;}
+  .pill{
+    padding:0.55rem 1.2rem; border-radius:999px; background:var(--ivory);
+    border:1px solid rgba(78,90,74,0.18); font-size:0.9rem; color:var(--charcoal);
+    transition:background .3s ease, color .3s ease, transform .3s ease;
+  }
+  .pill:hover{background:var(--olive); color:var(--ivory); transform:translateY(-2px);}
+
+  /* ============================================================
+     PROJECTS
+     ============================================================ */
+  .project-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:1.6rem; margin-top:3rem;
+  }
+  .project-card{
+    grid-column:span 1; position:relative; border-radius:20px; overflow:hidden;
+    background:var(--beige); border:1px solid rgba(78,90,74,0.1);
+  }
+  .project-card.wide{grid-column:span 2;}
+  .p-image{aspect-ratio:16/10; overflow:hidden; position:relative; background:linear-gradient(135deg, var(--sage), var(--beige));}
+  .p-image img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+  .project-card:hover .p-image img{transform:scale(1.06);}
+  .p-body{padding:1.5rem 1.6rem 1.8rem;}
+  .p-body h3{font-size:1.25rem;}
+  .p-body p{margin-top:0.5rem; font-size:0.92rem; color:#4a463f; max-width:60ch;}
+  .p-tech{display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1rem;}
+  .p-tech span{font-size:0.75rem; padding:0.3rem 0.7rem; border-radius:999px; background:var(--ivory); color:var(--olive);}
+  .p-links{display:flex; gap:1rem; margin-top:1.2rem;}
+  .p-links a{font-size:0.88rem; color:var(--brown); border-bottom:1px solid transparent; transition:border-color .3s ease;}
+  .p-links a:hover{border-color:var(--brown);}
+
+  @media (max-width: 760px){
+    .project-grid{grid-template-columns:1fr;}
+    .project-card.wide{grid-column:span 1;}
+  }
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  #contact{
+    background:var(--olive); color:var(--ivory); border-radius:32px; margin:2rem 1rem; padding:5rem 2rem;
+  }
+  #contact .wrap{max-width:1000px;}
+  #contact .eyebrow{color:var(--beige);}
+  #contact h2{color:var(--ivory);}
+  #contact .lead{margin-top:1rem; max-width:46ch; color:var(--beige); font-size:1.02rem;}
+  .contact-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:3.5rem; margin-top:3rem; align-items:start;}
+  .contact-links{display:flex; flex-direction:column; gap:1.1rem;}
+  .contact-links a{font-size:1rem; padding-bottom:0.4rem; border-bottom:1px solid rgba(248,245,239,0.25); transition:border-color .3s ease, color .3s ease;}
+  .contact-links a:hover{border-color:var(--ivory); color:var(--beige);}
+  form{display:flex; flex-direction:column; gap:1.1rem;}
+  form input, form textarea{
+    background:transparent; border:none; border-bottom:1px solid rgba(248,245,239,0.35);
+    color:var(--ivory); padding:0.7rem 0.2rem; font-family:var(--font-body); font-size:0.98rem;
+  }
+  form input::placeholder, form textarea::placeholder{color:rgba(248,245,239,0.55);}
+  form input:focus, form textarea:focus{outline:none; border-color:var(--ivory);}
+  form textarea{resize:vertical; min-height:90px;}
+  form button{
+    align-self:flex-start; margin-top:0.6rem; background:var(--ivory); color:var(--olive);
+    padding:0.85rem 1.8rem; border-radius:999px; border:none; font-size:0.92rem; cursor:pointer;
+    transition:transform .3s ease, background .3s ease;
+  }
+  form button:hover{transform:translateY(-2px); background:var(--beige);}
+  .form-note{font-size:0.85rem; color:var(--beige); margin-top:0.4rem; min-height:1.2em;}
+
+  @media (max-width: 780px){
+    .contact-grid{grid-template-columns:1fr; gap:2.2rem;}
+    #contact{margin:1.5rem 0.75rem; border-radius:22px; padding:3.5rem 1.4rem;}
+  }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer{padding:3.5rem 1.5rem 2.5rem; text-align:center;}
+  footer .signature{display:block; font-size:2.1rem; margin-bottom:0.6rem;}
+  footer .made-with{font-size:0.88rem; color:var(--olive);}
+  footer .copyright{font-size:0.8rem; color:#7c7c72; margin-top:1.2rem;}
+  .footer-socials{display:flex; gap:1.2rem; justify-content:center; margin-top:1.3rem;}
+  .footer-socials a{font-size:0.85rem; color:var(--brown); border-bottom:1px solid transparent;}
+  .footer-socials a:hover{border-color:var(--brown);}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<header id="site-header">
+  <nav class="wrap">
+    <a href="#home" class="signature">Aananya Agrawal</a>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="home">
+  <div class="wrap hero-grid">
+    <div class="hero-copy reveal">
+      <span class="kicker">Hello, I'm Aananya.</span>
+      <h1>I believe in staying grounded, following what feels right, and letting the journey unfold.</h1>
+      <p class="sub">Curious, creative and always learning.</p>
+      <p class="desc">I enjoy building meaningful things, solving problems, and turning ideas into experiences — one thoughtful step at a time.</p>
+      <div class="cta-row">
+        <a href="#projects" class="btn btn-primary">Explore My Work</a>
+        <a href="#contact" class="btn btn-outline">Let's Connect</a>
+      </div>
+    </div>
+    <div class="portrait-wrap reveal">
+      <div class="portrait-deco deco-ring" aria-hidden="true"></div>
+      <span class="portrait-deco deco-1" aria-hidden="true">✦</span>
+      <span class="portrait-deco deco-2" aria-hidden="true">☼</span>
+      <div class="portrait-shape">
+        <!-- Replace this single path to update your portrait everywhere -->
+        <img src="/images/aananya-portrait.jpg" alt="Portrait of Aananya Agrawal" onerror="this.style.display='none'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center';" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<p class="tagline reveal">Grounded in who I am. Curious about where I'm going.</p>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-text reveal">
+      <span class="eyebrow">A little about me</span>
+      <h2 class="section-heading">The short version</h2>
+      <p>I try to move through life — and work — with kindness first. I believe good things tend to come back around, so I hold onto patience even when things move slowly, and I stay curious about people, places, and ideas that are different from my own.</p>
+      <p>Professionally, that shows up as someone who learns quickly, cares about the details, and genuinely enjoys the process of figuring things out. I'm drawn to work that means something, and to teams where relationships matter as much as results.</p>
+      <p>Outside of work, I'm usually planning my next trip, picking up a new interest, or simply sitting somewhere quiet with a good cup of chai.</p>
+      <div class="journey-line" aria-hidden="true">
+        <span class="dot"></span><span class="seg"></span><span class="dot"></span><span class="seg"></span><span class="dot"></span>
+      </div>
+    </div>
+    <div class="beyond reveal">
+      <h3>Beyond the screen</h3>
+      <div class="card-grid">
+        <div class="personality-card">
+          <span class="glyph">🌿</span>
+          <p>Staying grounded</p>
+        </div>
+        <div class="personality-card">
+          <span class="glyph">✈️</span>
+          <p>Exploring new places</p>
+        </div>
+        <div class="personality-card">
+          <span class="glyph">✨</span>
+          <p>Learning something new</p>
+        </div>
+        <div class="personality-card">
+          <span class="glyph">🤍</span>
+          <p>Meaningful connections</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EDUCATION
+     ============================================================ -->
+<section id="education">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Education</span>
+      <h2 class="section-heading">Where I've studied</h2>
+    </div>
+    <div class="timeline">
+      <div class="t-item reveal">
+        <span class="t-year">[Year]</span>
+        <h3 class="t-title">[Degree / Course]</h3>
+        <p class="t-org">[Institution]</p>
+        <p class="t-desc">[Short description — coursework, focus areas, or achievements worth mentioning.]</p>
+      </div>
+      <div class="t-item reveal">
+        <span class="t-year">[Year]</span>
+        <h3 class="t-title">[Degree / Course]</h3>
+        <p class="t-org">[Institution]</p>
+        <p class="t-desc">[Short description — coursework, focus areas, or achievements worth mentioning.]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SKILLS
+     ============================================================ -->
+<section id="skills">
+  <div class="wrap" style="text-align:center;">
+    <div class="reveal">
+      <span class="eyebrow">Skills</span>
+      <h2 class="section-heading">Tools I work with</h2>
+    </div>
+    <div class="pill-row reveal">
+      <span class="pill">HTML</span>
+      <span class="pill">CSS</span>
+      <span class="pill">JavaScript</span>
+      <span class="pill">React</span>
+      <span class="pill">Python</span>
+      <span class="pill">Git</span>
+      <span class="pill">GitHub</span>
+      <span class="pill">UI/UX</span>
+      <span class="pill">Problem Solving</span>
+      <span class="pill">Communication</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS
+     ============================================================ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Projects</span>
+      <h2 class="section-heading">Things I've built</h2>
+    </div>
+    <div class="project-grid">
+      <div class="project-card wide reveal">
+        <div class="p-image"><img src="/images/project-01.jpg" alt="Screenshot of Project 01" onerror="this.style.display='none';" /></div>
+        <div class="p-body">
+          <h3>Project 01</h3>
+          <p>[A short description of what this project does and the problem it solves.]</p>
+          <div class="p-tech"><span>React</span><span>Node.js</span><span>Tailwind</span></div>
+          <div class="p-links">
+            <a href="#" target="_blank" rel="noopener noreferrer">View Project</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="p-image"><img src="/images/project-02.jpg" alt="Screenshot of Project 02" onerror="this.style.display='none';" /></div>
+        <div class="p-body">
+          <h3>Project 02</h3>
+          <p>[A short description of what this project does.]</p>
+          <div class="p-tech"><span>Python</span><span>Flask</span></div>
+          <div class="p-links">
+            <a href="#" target="_blank" rel="noopener noreferrer">View Project</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="p-image"><img src="/images/project-03.jpg" alt="Screenshot of Project 03" onerror="this.style.display='none';" /></div>
+        <div class="p-body">
+          <h3>Project 03</h3>
+          <p>[A short description of what this project does.]</p>
+          <div class="p-tech"><span>JavaScript</span><span>API</span></div>
+          <div class="p-links">
+            <a href="#" target="_blank" rel="noopener noreferrer">View Project</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="p-image"><img src="/images/project-04.jpg" alt="Screenshot of Project 04" onerror="this.style.display='none';" /></div>
+        <div class="p-body">
+          <h3>Project 04</h3>
+          <p>[A short description of what this project does.]</p>
+          <div class="p-tech"><span>Figma</span><span>UI/UX</span></div>
+          <div class="p-links">
+            <a href="#" target="_blank" rel="noopener noreferrer">View Project</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EXPERIENCE
+     ============================================================ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Experience</span>
+      <h2 class="section-heading">Where I've worked</h2>
+    </div>
+    <div class="timeline">
+      <div class="t-item reveal">
+        <span class="t-year">[Duration]</span>
+        <h3 class="t-title">[Job Title]</h3>
+        <p class="t-org">[Company Name]</p>
+        <p class="t-desc">
+          [Short description of the role.]
+          <ul>
+            <li>[Key responsibility or achievement]</li>
+            <li>[Key responsibility or achievement]</li>
+          </ul>
+        </p>
+      </div>
+      <div class="t-item reveal">
+        <span class="t-year">[Duration]</span>
+        <h3 class="t-title">[Job Title]</h3>
+        <p class="t-org">[Company Name]</p>
+        <p class="t-desc">
+          [Short description of the role.]
+          <ul>
+            <li>[Key responsibility or achievement]</li>
+            <li>[Key responsibility or achievement]</li>
+          </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Contact</span>
+      <h2 class="section-heading">Let's create something meaningful.</h2>
+      <p class="lead">Whether it's a project, an opportunity, or simply a conversation, I'd love to hear from you.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-links reveal">
+        <a href="mailto:aananya@example.com">aananya@example.com</a>
+        <a href="https://linkedin.com/in/aananya" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/aananya" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://instagram.com/aananya" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+      <form id="contact-form" class="reveal">
+        <input type="text" name="name" placeholder="Name" required aria-label="Name" />
+        <input type="email" name="email" placeholder="Email" required aria-label="Email" />
+        <textarea name="message" placeholder="Message" required aria-label="Message"></textarea>
+        <button type="submit">Send Message</button>
+        <p class="form-note" id="form-note"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <span class="signature">Aananya Agrawal</span>
+  <p class="made-with">Made with curiosity, kindness &amp; a little bit of coffee.</p>
+  <div class="footer-socials">
+    <a href="mailto:aananya@example.com">Email</a>
+    <a href="https://linkedin.com/in/aananya" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/aananya" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://instagram.com/aananya" target="_blank" rel="noopener noreferrer">Instagram</a>
+  </div>
+  <p class="copyright">© 2026 Aananya Agrawal</p>
+</footer>
+
+<script>
+  // ---- Navbar blur on scroll ----
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 24);
+  });
+
+  // ---- Mobile menu ----
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ---- Scroll reveal ----
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // ---- Contact form (front-end only placeholder) ----
+  const form = document.getElementById('contact-form');
+  const note = document.getElementById('form-note');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    note.textContent = "Thank you — I'll get back to you soon. (Connect this form to your email service to make it live.)";
+    form.reset();
+  });
+</script>
+</body>
 </html>
